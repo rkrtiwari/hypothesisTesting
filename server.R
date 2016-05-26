@@ -15,7 +15,12 @@ server <- function(input, output){
   
   output$pvalue <- renderText({
     pval <- pnorm(input$x, mean = input$mean, sd = input$sd)
-    paste("The probability is:", round(pval, 3), sep = " ")
+    paste("The probability of x value higher than", input$x, ' is ', round(1-pval, 3),
+          'the area of the blue region', sep = " ")
+  })
+  
+  output$formula1 <- renderText({
+    paste('pnorm( ', input$x, ', mean = ', input$mean, ', sd = ', input$sd, ', lower.tail = FALSE)', sep = '')
   })
   
 }

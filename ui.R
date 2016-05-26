@@ -14,7 +14,9 @@ ui <- fluidPage(
     ),
     
     fluidRow(
-      column(12, textOutput("pvalue"))
+      column(12, textOutput("pvalue")),
+      column(12, p('use the following formula to get the pvalue:')),
+      column(12, textOutput("formula1"))
     )
   )
   
