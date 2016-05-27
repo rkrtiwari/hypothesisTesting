@@ -21,13 +21,24 @@ ui <- fluidPage(
                         
                ),
                
-               tabPanel("Binomial Distribution"),
+               tabPanel("Binomial Distribution",
+                        fluidRow(column(4, numericInput("nt", "Number of Trials", val = 100))),
+                        fluidRow(column(4, numericInput("ps", "probability", val = 0.5, 
+                                                        min = 0, max = 1, step = 0.05))),
+                        fluidRow(plotOutput("plot2"))
+                        ),
                
                tabPanel("Central Limit Theory"),
                
                tabPanel("t-test", 
-                        fluidRow(8, plotOutput("plot2")),
-                        fluidRow(8, plotOutput("plot3"))
+                        fluidRow(plotOutput("plot3")),
+                        fluidRow(tags$code(textOutput("formula7"))),
+                        fluidRow(tags$code(textOutput("formula2"))),
+                        fluidRow(tags$code(textOutput("formula3"))),
+                        fluidRow(tags$code(textOutput("formula4"))),
+                        fluidRow(tags$code(textOutput("formula6"))),
+                        fluidRow(plotOutput("plot4")),
+                        fluidRow(tags$code(textOutput("formula5")))
                         )
                
                )

@@ -13,21 +13,20 @@ server <- function(input, output){
     polygon( c(xpol, rev(xpol)), c(xpolval, rev(ypol)), col = "blue")
   })
   
-  output$pvalue <- renderText({
-    pval <- pnorm(input$x, mean = input$mean, sd = input$sd)
-    paste("The probability of x value higher than", input$x, ' is ', round(1-pval, 3),
-          'the area of the blue region', sep = " ")
-  })
-  
-  output$formula1 <- renderText({
-    paste('pnorm( ', input$x, ', mean = ', input$mean, ', sd = ', input$sd, ', lower.tail = FALSE)', sep = '')
-  })
   
   output$plot2 <- renderPlot({
-    boxplot(extra ~ group, data = sleep, col="green", xlab="Drug Type", ylab = "Increase in Sleep Hours")
+    nt <- input$nt
+    ps <- input$ps
+    xvals <- 0:nt
+    yvals <- dbinom(xvals, nt, ps)
+    plot(xvals, yvals, type = "b", col="red", xlab = "Trial", ylab = "Success Probability")
   })
   
   output$plot3 <- renderPlot({
+    boxplot(extra ~ group, data = sleep, col="green", xlab="Drug Type", ylab = "Increase in Sleep Hours")
+  })
+  
+  output$plot4 <- renderPlot({
     g1 <- sleep[sleep$group==1,]
     g1$group <- as.numeric(g1$group)
     g2 <- sleep[sleep$group==2,]
@@ -40,5 +39,42 @@ server <- function(input, output){
       segments(g1$group[i], g1$extra[i], g2$group[i], g2$extra[i], col = "blue")
     }
   })
+  
+  output$pvalue <- renderText({
+    pval <- pnorm(input$x, mean = input$mean, sd = input$sd)
+    paste("The probability of x value higher than", input$x, ' is ', round(1-pval, 3),
+          'the area of the blue region', sep = " ")
+  })
+  
+  output$formula1 <- renderText({
+    paste('pnorm( ', input$x, ', mean = ', input$mean, ', sd = ', input$sd, ', lower.tail = FALSE)', sep = '')
+  })
+  
+  
+  output$formula2 <- renderText({
+    paste('drug1 <- sleep$extra[1:10]', sep = "")
+  })
+  
+  output$formula3 <- renderText({
+    paste('drug2 <- sleep$extra[11:20]', sep = "")
+  })
+  
+  output$formula4 <- renderText({
+    paste('t.test(drug1, drug2, alternative = "less")', sep = "")
+  })
+  
+  output$formula5 <- renderText({
+    paste('t.test(drug1, drug2, paired = TRUE)$conf', sep = "")
+  })
+  
+  output$formula6 <- renderText({
+    paste('t.test(drug1, drug2, paired = FALSE)$conf', sep = "")
+  })
+  
+  output$formula7 <- renderText({
+    paste('t.test(sleep$extra, mu = 0)$conf', sep = "")
+  })
+  
+
   
 }
