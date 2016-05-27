@@ -23,7 +23,18 @@ ui <- fluidPage(
                
                tabPanel("Binomial Distribution"),
                
-               tabPanel("Central Limit Theory"))
+               tabPanel("Central Limit Theory"),
+               
+               tabPanel("t-test", 
+                        fluidRow(8, plotOutput("plot2")),
+                        fluidRow(8, plotOutput("plot3"))
+                        )
+               
+               )
+             
+             
+             
+             
              
   )    
     
